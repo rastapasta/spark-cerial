@@ -1,0 +1,7 @@
+{
+    "name": "Cerial",
+    "version": "0.0.1",
+    "author": "Michael Straßburger <m.strassburger+spark@gmail.com>",
+    "license": "GPLv3",
+    "description": "Cloud Serial adapter for the Spark Core, provides a Serial alike device to be controlled via the Cloud"
+}

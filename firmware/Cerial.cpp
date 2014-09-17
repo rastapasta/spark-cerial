@@ -25,13 +25,15 @@ Cerialize::Cerialize() {
 
 // Write a byte to the buffer - overflows after set length
 size_t Cerialize::write(uint8_t character) {
-	// Set the current circular position and write the byte
-	buffer[0] = position>>4;
-	buffer[1] = position&0xFF;
-	buffer[position+2] = character;
+	// Update our current pointers position
+	sprintf((char *)buffer, "%-3d", position);
+	buffer[3] = ' ';
+
+	// Write the byte
+	buffer[4+position] = character;
 
 	// Increment our circular buffer pointer
-	position = ++position % (sizeof(buffer)-2);
+	position = ++position % (sizeof(buffer)-4);
 	return 1;
 }
 
@@ -74,7 +76,8 @@ int Cerialize::input(String &input) {
 
 // Setup the cloud buffer access
 void Cerialize::begin() {
-	Spark.variable("cerial", buffer, STRING);
+	Spark.variable("cerialBuffer", buffer, STRING);
+
 	// TODO: would <3 to do a Spark.function("cerial", input) here
 	// But terribly fails with following error:
 	//		static void function(const char *funcKey, int (*pFunc)(String paramString));

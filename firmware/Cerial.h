@@ -17,8 +17,11 @@
  */
 #ifndef Cerial_h
 #define Cerial_h
+#include <math.h>
+#include <spark_wiring_stream.h>
 
-#include "spark_wiring_stream.h"
+// import itoa
+extern char* itoa(int a, char* buffer, unsigned char radix);
 
 class Cerialize : public Stream
 {
@@ -26,16 +29,16 @@ class Cerialize : public Stream
 		// Our output + input buffers
 		// Ouput: FIFO, circular
 		// Input: FIFO, max sized
-		byte buffer[622];
-		byte bufferIn[620];
+		uint8_t buffer[622];
+		uint8_t bufferIn[620];
 
 		// Circular position and input buffer counter
-		int position = 0;
-		int countIn = 0;
+		uint16_t position = 0;
+		uint16_t countIn = 0;
 
 	public:
-		
 		Cerialize();
+
 		// Overwrite the core Print function
 		size_t write(uint8_t);
 		

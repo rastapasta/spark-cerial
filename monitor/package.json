@@ -1,0 +1,28 @@
+{
+  "name": "spark-cerial-monitor",
+  "version": "0.0.1",
+  "description": "Cloud Serial monitor for spark-cerial",
+  "main": "monitor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rastapasta/spark-cerial"
+  },
+  "keywords": [
+    "spark",
+    "serial",
+    "cloud"
+  ],
+  "author": "Michael Strassburger",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/rastapasta/spark-cerial/issues"
+  },
+  "homepage": "https://github.com/rastapasta/spark-cerial",
+
+  "dependencies" : {
+    "sparknode": "~0.4.9"
+  }
+}
