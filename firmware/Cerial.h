@@ -53,6 +53,7 @@ class Cerialize : public Stream
 		void end();
 
 		// Offer an input backstream for a cloud call
-		int input(String &input);
+		static int input(String, void*);
+		int handleInput(String &);
 };
 #endif

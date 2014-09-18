@@ -16,7 +16,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 var spark = require('sparknode'),
-	fs = require('fs');
+	fs = require('fs'),
+	print = function(str) { process.stdout.write(str); };
 
 var config = process.env['HOME']+'/.spark/spark.config.json';
 var core;
@@ -41,39 +42,50 @@ var coreId = process.argv[2];
 
 // Try to authenticate with the Spark Cloud
 try {
+	print("Connecting to Spark Cloud... ");
 	core = new spark.Core({
 		accessToken: accessToken,
 		id: coreId
 	});
 } catch(e) {
-	console.log("Cloud connection failed... check your access token!");
+	print("failed... check your access token!\n");
 	process.exit(0);
 }
 
 // Wait for the core to be connected..
 core.on('connect', function(){
-	console.log('Succesfully connected to the Spark Cloud. Starting cerial monitor...');
+	print("connected.\nStarting cerial monitor... ");
 	requestLoop();
 });
 
 // And start our pull loop!
-var lastPointer = 0;
+var last = {
+	first: true,
+	pointer: 0,
+	data: null
+};
+
 function requestLoop() {
 	core.cerialBuffer(function(err, data) {
 		if (err)
 			return console.log(err);
+		if (last.first) {
+			last.first = false;
+			print("got first data!\n---\n");
+		}
 
-		if (data) {
+		if (data && data != last.data) {
 			var pointer = parseInt(data.substr(0,3));
-			var serial = data.substr(4);
+			var content = data.substr(4);
 			
 			// Print what we got!
-			process.stdout.write( pointer > lastPointer ?
-				serial.substr(lastPointer, pointer-lastPointer) :
-				serial.substr(lastPointer) + serial.substr(0, pointer)
+			print( pointer > last.pointer ?
+				content.substr(last.pointer, pointer-last.pointer) :
+				content.substr(last.pointer) + content.substr(0, pointer)
 			);
 
-			lastPointer = pointer;
+			last.pointer = pointer;
+			last.data = data;
 		}
 		requestLoop();
 	});	

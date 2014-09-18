@@ -25,15 +25,16 @@ Cerialize::Cerialize() {
 
 // Write a byte to the buffer - overflows after set length
 size_t Cerialize::write(uint8_t character) {
-	// Update our current pointers position
-	sprintf((char *)buffer, "%-3d", position);
-	buffer[3] = ' ';
-
 	// Write the byte
 	buffer[4+position] = character;
 
 	// Increment our circular buffer pointer
 	position = ++position % (sizeof(buffer)-4);
+
+	// Update our current pointers position
+	sprintf((char *)buffer, "%-3d", position);
+	buffer[3] = ' ';
+
 	return 1;
 }
 
@@ -63,8 +64,12 @@ int Cerialize::available() {
 	return countIn;
 }
 
+int Cerialize::input(String input, void* pv) {
+	return ((Cerialize*)pv)->handleInput(input);
+}
+
 // Handle input the user sends to the Cerial device
-int Cerialize::input(String &input) {
+int Cerialize::handleInput(String &input) {
 	if (input.length()+countIn > sizeof(bufferIn))
 		return -1;
 
@@ -77,11 +82,7 @@ int Cerialize::input(String &input) {
 // Setup the cloud buffer access
 void Cerialize::begin() {
 	Spark.variable("cerialBuffer", buffer, STRING);
-
-	// TODO: would <3 to do a Spark.function("cerial", input) here
-	// But terribly fails with following error:
-	//		static void function(const char *funcKey, int (*pFunc)(String paramString));
-	//		no known conversion for argument 2 from '<unresolved overloaded function type>' to 'int (*)(String)'
+	Spark.function("cerial", Cerialize::input, this);
 }
 
 // No need to support end & flush, here for full Serial compatibility reasons
