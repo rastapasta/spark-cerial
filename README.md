@@ -8,7 +8,7 @@ It is a **drop-in replacement** for [`Serial`](http://docs.spark.io/firmware/#co
 ### Key features
 
 - Debug your code as if your Spark Core would be locally connected
-- 100% compatible with all `Serial` functions (printing, formatting, writing/reading, conversion...)
+- 100% compatible with all [`Serial`](http://docs.spark.io/firmware/#communication-serial) functions (printing, formatting, writing/reading, conversion...)
 - Communicate in **both** ways, read the output and send your input
 - [FIFO](https://en.wikipedia.org/wiki/FIFO) input & circular output buffers
 - Cerial Monitor as a serial monitor replacement, available as
@@ -74,7 +74,7 @@ Local build:
     Cerialize Cerial;
 ```
 
-From here on, everything is identical to the usage of the classical Serial interface.
+From here on, everything is identical to the usage of the classical [`Serial`](http://docs.spark.io/firmware/#communication-serial) interface.
 
 Call `Cerial.begin()` from your setup function and you are ready to go!
 
