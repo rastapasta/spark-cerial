@@ -23,7 +23,7 @@ It is a **drop-in replacement** for [Serial](http://docs.spark.io/firmware/#comm
   void setup() {
     Cerial.begin();
     
-    Cerial.println("Waiting for you... send me a key if you read me!");
+    Cerial.println("Waiting for you... send me something to continue!");
     while(!Cerial.available()) SPARK_WLAN_Loop();
     
     Cerial.print("Dude.. I'm already running since ");
@@ -82,13 +82,13 @@ In all cases, just use `Cerial.*` instead of `Serial.*`.
 
 ## How does it work?
 
-Like the `Serial` class, the library extends  [`Stream`](https://github.com/spark/firmware/blob/master/src/spark_wiring_stream.cpp) and provides all mandatory functions to it. Doing so allows the full usage of the toolchain `Stream` and  [`Print`](https://github.com/spark/firmware/blob/master/src/spark_wiring_print.cpp) provides.
+Like the `Serial` class, the library extends  [`Stream`](https://github.com/spark/firmware/blob/master/src/spark_wiring_stream.cpp) and provides all mandatory functions to it. Doing so allows the full usage of the toolchain Stream and  [`Print`](https://github.com/spark/firmware/blob/master/src/spark_wiring_print.cpp) provide.
 
 By calling `Cerial.begin()` following Spark accessors are being set up:
 - Output: `cerialBuffer` - holding the circular output buffer and a pointer to the current circular position
 - Input: `cerial` - feed data to the Cerial device
 
-The first 3 bytes of the `cerialBuffer` contain a stringified version of the current circular position followed by spaces. From byte 4 to 622 the circular buffer is allocated.
+The first 4 bytes of the `cerialBuffer` contain a stringified version of the current circular position right-padded with spaces. In bytes 4 to 622 the circular buffer is allocated.
 
 The Cerial Monitor constantly pulls this buffer and outputs the changed bytes to the user, simulating a real Serial experience.
 
