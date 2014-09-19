@@ -3,14 +3,14 @@ spark-cerial - Cloud Serial adapter
 
 **Cerial** is a library giving you an easy way to debug your [Spark Core](http://spark.io) over the cloud.
 
-It is a **drop-in replacement** for [Serial](http://docs.spark.io/firmware/#communication-serial) usage, offering all its functionalities with identical syntax.
+It is a **drop-in replacement** for [`Serial`](http://docs.spark.io/firmware/#communication-serial), offering all its functionalities with identical syntax.
 
 ### Key features
 
-- Debug your code as if your Spark Core would be connected locally
-- 100% compatible with all Serial functions (printing, formatting, writing/reading, conversion...)
+- Debug your code as if your Spark Core would be locally connected
+- 100% compatible with all `Serial` functions (printing, formatting, writing/reading, conversion...)
 - Communicate in **both** ways, read the output and send your input
-- [FIFO](https://en.wikipedia.org/wiki/FIFO) input & output buffers, circular buffering for the (debug) win!
+- [FIFO](https://en.wikipedia.org/wiki/FIFO) input & circular output buffers
 - Cerial Monitor as a serial monitor replacement, available as
   - HTML5 based web interface 
   - Node.js based console version
@@ -39,7 +39,7 @@ It is a **drop-in replacement** for [Serial](http://docs.spark.io/firmware/#comm
       Cerial.println();
     }
       
-    // Do funky conversions
+    // Do some funky conversions
     Cerial.println(Time.now(), HEX);
     
     // Or whatever comes into your magical mind!
