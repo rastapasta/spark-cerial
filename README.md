@@ -3,7 +3,7 @@ spark-cerial - Cloud Serial adapter
 
 **Cerial** is a library giving you an easy way to debug your [Spark Core](http://spark.io) over the cloud.
 
-It is a **drop-in replacement** for [Serial](http://docs.spark.io/firmware/#communication-serial) usage, offering all its functionalities with identical function calls.
+It is a **drop-in replacement** for [Serial](http://docs.spark.io/firmware/#communication-serial) usage, offering all its functionalities with identical syntax.
 
 ### Key features
 
