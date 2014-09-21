@@ -18,6 +18,8 @@
 
 #include "Cerial.h"
 
+Cerialize* Cerialize::instance;
+
 Cerialize::Cerialize() {
 	// Maker sure our buffer is empty
 	memset(&buffer, 0, sizeof(buffer));
@@ -64,8 +66,8 @@ int Cerialize::available() {
 	return countIn;
 }
 
-int Cerialize::input(String input, void* pv) {
-	return ((Cerialize*)pv)->handleInput(input);
+int Cerialize::input(String input) {
+	return instance->handleInput(input);
 }
 
 // Handle input the user sends to the Cerial device
@@ -81,8 +83,12 @@ int Cerialize::handleInput(String &input) {
 
 // Setup the cloud buffer access
 void Cerialize::begin() {
+	// Offer an input backstream for a cloud call
+	// Waiting for https://github.com/spark/firmware/pull/314
+	// Spark.function("cerial", Cerialize::input, this);
+	instance = this;
+	Spark.function("cerial", Cerialize::input);
 	Spark.variable("cerialBuffer", buffer, STRING);
-	Spark.function("cerial", Cerialize::input, this);
 }
 
 // No need to support end & flush, here for full Serial compatibility reasons

@@ -35,6 +35,7 @@ class Cerialize : public Stream
 		// Circular position and input buffer counter
 		uint16_t position = 0;
 		uint16_t countIn = 0;
+		static Cerialize* instance;
 
 	public:
 		Cerialize();
@@ -53,7 +54,9 @@ class Cerialize : public Stream
 		void end();
 
 		// Offer an input backstream for a cloud call
-		static int input(String, void*);
+		// Waiting for https://github.com/spark/firmware/pull/314
+		// static int input(String, void*);
+		static int input(String);
 		int handleInput(String &);
 };
 #endif
