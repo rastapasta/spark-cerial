@@ -1,6 +1,8 @@
 spark-cerial - Cloud Serial adapter
 =============================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/rastapasta/spark-cerial.svg)](https://greenkeeper.io/)
+
 **Cerial** is a library giving you an easy way to debug your [Spark Core](http://spark.io) over the cloud.
 
 It is a **drop-in replacement** for [`Serial`](http://docs.spark.io/firmware/#communication-serial), offering all its functionalities with identical syntax.
